@@ -1,13 +1,10 @@
-const GitHubService = require("./src/services/GitHub.service");
-
 const { ApolloServer } = require("apollo-server");
 const graphql = require("./src/graphql");
+const config = require("./src/config");
 
 const server = new ApolloServer({
   ...graphql,
-  dataSources: () => ({
-    gitHubService: GitHubService,
-  }),
+  ...config,
 });
 
 server.listen().then(({ url }) => console.log(url));

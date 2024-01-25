@@ -1,9 +1,8 @@
 const { join } = require("path");
-const {
-  loadFilesSync,
-  mergeTypeDefs,
-  mergeResolvers,
-} = require("graphql-tools");
+
+const { loadFilesSync } = require("@graphql-tools/load-files");
+
+const { mergeTypeDefs, mergeResolvers } = require("@graphql-tools/merge");
 
 const allTypes = loadFilesSync(join(__dirname, "modules", "**", "*.gql"));
 const allResolvers = loadFilesSync(
