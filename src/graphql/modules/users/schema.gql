@@ -3,6 +3,7 @@ type User {
   login: String
   avatar_url: String
   tasks: [Task]
+  token: String
 }
 
 type Query {

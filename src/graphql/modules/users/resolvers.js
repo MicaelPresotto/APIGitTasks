@@ -1,18 +1,25 @@
+const generator = require("../../../helpers/generator");
+
 module.exports = {
   Query: {
     async user(_, { login }, { dataSources }) {
       const userRegistered =
         await dataSources.userRegisterService.getUserByLogin(login);
 
-      if (userRegistered) return await userRegistered;
+      if (userRegistered) {
+        userRegistered.token = generator.createToken(userRegistered.id);
+        return await userRegistered;
+      }
 
       const { login: login_user, avatar_url } =
         await dataSources.gitHubService.getUser(login);
 
-      return await dataSources.userRegisterService.addUser({
+      const newUser = await dataSources.userRegisterService.addUser({
         login: login_user,
         avatar_url: avatar_url,
       });
+      newUser.token = generator.createToken(newUser.id);
+      return await newUser;
     },
   },
   User: {
